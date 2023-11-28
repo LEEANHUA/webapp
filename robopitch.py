@@ -126,24 +126,6 @@ def robotization(input_audio, win_size, window_type, f0_fs, fs):
     output_audio = output_audio / max(np.abs(output_audio))
     return output_audio
 
-# if __name__ == '__main__':
-#     #入力
-#     if len(sys.argv) != 6:
-#         raise Exception('robopitch1.py infile outfile win_size threshold window_type')
-
-#     IN_FILE = sys.argv[1]
-#     OUT_FILE = sys.argv[2]
-#     win_size = int(sys.argv[3])
-#     threshold = float(sys.argv[4])
-#     window_type = sys.argv[5]
-
-#     input_audio, fs = sf.read(IN_FILE)
-#     voice_len = len(input_audio)
-#     fs, f0, ap, sp = feature_extract(IN_FILE)
-#     f0_fs = norm_threshold(IN_FILE, f0, voice_len)
-#     output_audio = robotization(input_audio, win_size, window_type, f0_fs)
-#     sf.write(OUT_FILE, output_audio, fs, subtype='FLOAT')
-
 def robopitch(infile, win_size, threshold, win_type):
     input_audio, fs = sf.read(infile)
     voice_len = len(input_audio)
@@ -161,7 +143,6 @@ def upload_file():
     if request.method == "GET":
         return render_template("index.html")
     if request.method == "POST":
-        
         result = int(request.form["parameter"])
         infile = "/work/miyamoto/bthesis/wav_original/CJF04/01.wav"
         threshold = result * 3 / 100
