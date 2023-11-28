@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        加工の強さを選択してください<br>
+        <form action="" method="POST">
+            弱<input type="range" name="parameter" min="0" max="100" value="{{ result }}" step="1">強
+            <input type="submit" value="加工">
+        </form>
+        <hr>
+        {% if filepath %}
+        加工強度 {{ result }} で加工した場合<br>
+        <audio controls src="{{ filepath }}" type="audio/wav"></audio>
+        {% endif %}
+    </body>
+</html>
