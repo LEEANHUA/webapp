@@ -306,13 +306,13 @@ def upload_file():
             threshold = result * 120 / 100
             filepath = inharmonic_warping(infile, "all", 1, threshold)
         elif select_method == "iw_all_2":
-            threshold = result * 64 / 100
+            threshold = (101-result) * 64 / 100
             filepath = inharmonic_warping(infile, "all", 2, threshold)
         elif select_method == "iw_vib_1":
             threshold = result * 120 / 100
             filepath = inharmonic_warping(infile, "vib", 1, threshold)
         elif select_method == "iw_vib_2":
-            threshold = result * 64 / 100
+            threshold = (101-result) * 64 / 100
             filepath = inharmonic_warping(infile, "vib", 2, threshold)
         
         return render_template("index.html", methods=methods, filepath=filepath, result=result)
