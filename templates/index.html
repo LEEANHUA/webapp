@@ -4,12 +4,13 @@
         加工方法を選択してください<br>
         <form action="" method="POST">
             <select name="process_method">
-                <option value="robopitch_512">robopitch, 窓長512サンプル</option>
-                <option value="robopitch_1024">robopitch, 窓長1024サンプル</option>
-                <option value="iw_all_1">Inharmonic Warping, all, 一次関数</option>
-                <option value="iw_vib_1">Inharmonic Warping, vib, 一次関数</option>
-                <option value="iw_all_2">Inharmonic Warping, all, 二次関数</option>
-                <option value="iw_vib_2">Inharmonic Warping, vib, 二次関数</option>
+                {% for method in methods %}
+                    {% if method.selected %}
+                        <option value="{{ method.code }}" selected>{{ method.display }}</option>
+                    {% else %}
+                        <option value="{{ method.code }}">{{ method.display }}</option>
+                    {% endif%}
+                {% endfor%}
             </select><br>
             加工の強さを選択してください<br>
             弱<input type="range" name="parameter" min="0" max="100" value="{{ result }}" step="1">強
