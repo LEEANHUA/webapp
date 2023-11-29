@@ -12,6 +12,7 @@ from datetime import datetime
 # Flask関連
 from flask import Flask, render_template, request
 
+#---------------------------robopirch---------------------------
 #特徴量抽出
 def feature_extract(file_name):
     f0_type = "harvest"
@@ -137,7 +138,8 @@ def robopitch(infile, win_size, threshold, win_type):
     outfile = "./static/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
     sf.write(outfile, output_audio, fs, subtype='FLOAT')
     return outfile
-    
+
+#---------------------------Inharmonic Warping---------------------------
 #基本周波数抽出
 #harvestかdio
 def calc_f0(data, fs, function, frame_shift):
@@ -207,7 +209,7 @@ def expand_spectrum(target_spec, window_len,function, f0, parameter, fs):
         nonlinear_expanded_spec[-i-1] = nonlinear_expanded_spec_half[i]
     return nonlinear_expanded_spec
 
-#inharmonic warping
+#inharmonicityを上昇させる
 def increase_inharmonicity(data, spectrum, function, parameter, fs):
     window_len = 2048
     window_shift = window_len // 4
