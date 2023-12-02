@@ -97,16 +97,10 @@ def norm_threshold(IN_FILE, f0, voice_len, threshold):
     return f0_fs
 
 #robotizationを基本周波数離散化を元に適用する
-def robotization(input_audio, win_size, window_type, f0_fs, fs):
+def robotization(input_audio, win_size, f0_fs, fs):
     N = len(input_audio)
     #窓の種類
-    window = np.hanning(win_size)
-    if window_type == "hamming":
-        window = signal.hamming(win_size)
-    elif window_type == "blackman":
-        window = signal.blackman(win_size)
-    elif window_type == "bartlett":
-        window = signal.bartlett(win_size)
+    window = signal.blackman(win_size)
     #input_audioの正規化
     input_audio = input_audio / max(np.abs(input_audio))
     output_audio = np.zeros(len(input_audio))
@@ -129,12 +123,12 @@ def robotization(input_audio, win_size, window_type, f0_fs, fs):
     output_audio = output_audio / max(np.abs(output_audio))
     return output_audio
 
-def robopitch(infile, win_size, threshold, win_type):
+def robopitch(infile, win_size, threshold):
     input_audio, fs = sf.read(infile)
     voice_len = len(input_audio)
     fs, f0, ap, sp = feature_extract(infile)
     f0_fs = norm_threshold(infile, f0, voice_len, threshold)
-    output_audio = robotization(input_audio, win_size, win_type, f0_fs, fs)
+    output_audio = robotization(input_audio, win_size, f0_fs, fs)
     outfile = "./static/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
     sf.write(outfile, output_audio, fs, subtype='FLOAT')
     return outfile
@@ -298,10 +292,10 @@ def upload_file():
         infile = "/work/miyamoto/bthesis/wav_original/CJF04/01.wav"
         if select_method == "robopitch_512":
             threshold = result * 3 / 100
-            filepath = robopitch(infile, 512, threshold, "blackman")
+            filepath = robopitch(infile, 512, threshold)
         elif select_method == "robopitch_1024":
             threshold = result * 3 / 100
-            filepath = robopitch(infile, 1024, threshold, "blackman")
+            filepath = robopitch(infile, 1024, threshold)
         elif select_method == "iw_all_1":
             threshold = result * 120 / 100
             filepath = inharmonic_warping(infile, "all", 1, threshold)
