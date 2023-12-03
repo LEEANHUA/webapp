@@ -7,8 +7,46 @@ h1, h2, h3, h4, h5, h6, p, div {
 
 .methods {
     display: flex;
+    padding-top: 50px;
+    padding-left: 50px;
 }
 
 .method {
-    width: 200px;
+    width: 250px;
+}
+
+.toggle {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: #dddddd;
+  cursor: pointer;
+  transition: background-color .4s;
+}
+
+.toggle:has(:checked) {
+  background-color: #2d75ff;
+}
+
+.toggle::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+  background-color: #fff;
+  content: '';
+  transition: left .4s;
+}
+
+.toggle:has(:checked)::after {
+  left: 20px;
+}
+
+.toggle input {
+  display: none;
 }

@@ -10,9 +10,13 @@
             <div class="methods">
                 <div class="method">
                     {% if result['RP_toggle'] %}
-                        <input type="checkbox" name="RP_toggle" checked>
+                        <label class="toggle">
+                            <input type="checkbox" name="RP_toggle" checked>
+                        </label>
                     {% else %}
-                        <input type="checkbox" name="RP_toggle">
+                        <label class="toggle">
+                            <input type="checkbox" name="RP_toggle">
+                        </label>
                     {% endif %}
                     Robopitch
                     <p>threshold</p>
@@ -22,9 +26,13 @@
                 </div>
                 <div class="method">
                     {% if result['IW_toggle'] %}
-                        <input type="checkbox" name="IW_toggle" checked>
+                        <label class="toggle">
+                            <input type="checkbox" name="IW_toggle" checked>
+                        </label>
                     {% else %}
-                        <input type="checkbox" name="IW_toggle">
+                        <label class="toggle">
+                            <input type="checkbox" name="IW_toggle">
+                        </label>
                     {% endif %}
                     Inharmonic Warping
                     <p>parameter</p>
