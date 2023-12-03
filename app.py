@@ -12,7 +12,7 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def upload_file():
     if request.method == "GET":
-        return render_template("index.html")
+        return render_template("index.html", result={})
     if request.method == "POST":
         # formの入力を辞書型で取得
         result = request.form.to_dict()
