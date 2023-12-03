@@ -6,24 +6,41 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
     </head>
     <body>
-        加工方法を選択してください<br>
         <form action="" method="POST">
-            <select name="process_method">
-                {% for method in methods %}
-                    {% if method.selected %}
-                        <option value="{{ method.code }}" selected>{{ method.display }}</option>
+            <div class="methods">
+                <div class="method">
+                    {% if result['RP_toggle'] %}
+                        <input type="checkbox" name="RP_toggle" checked>
                     {% else %}
-                        <option value="{{ method.code }}">{{ method.display }}</option>
-                    {% endif%}
-                {% endfor%}
-            </select><br>
-            加工の強さを選択してください<br>
-            弱<input type="range" name="parameter" min="0" max="100" value="{{ result }}" step="1">強
-            <input type="submit" value="加工">
+                        <input type="checkbox" name="RP_toggle">
+                    {% endif %}
+                    Robopitch
+                    <p>threshold</p>
+                    <input type="range" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
+                    <p>window_length</p>
+                    <input type="range" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1">
+                </div>
+                <div class="method">
+                    {% if result['IW_toggle'] %}
+                        <input type="checkbox" name="IW_toggle" checked>
+                    {% else %}
+                        <input type="checkbox" name="IW_toggle">
+                    {% endif %}
+                    Inharmonic Warping
+                    <p>parameter</p>
+                    <input type="range" name="IW_parameter" min="1" max="100" value="{{ result['IW_parameter'] }}" step="1">
+                    <p>spectrum</p>
+                    <input type="range" name="IW_spectrum" min="1" max="2" value="{{ result['IW_spectrum'] }}" step="1">
+                    <p>function</p>
+                    <input type="range" name="IW_function" min="1" max="2" value="{{ result['IW_function'] }}" step="1">
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="加工">
+            </div>
         </form>
         <hr>
         {% if filepath %}
-        加工強度 {{ result }} で加工した場合<br>
         <audio controls autoplay src="{{ filepath }}" type="audio/wav"></audio>
         {% endif %}
     </body>

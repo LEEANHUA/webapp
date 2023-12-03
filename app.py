@@ -1,3 +1,6 @@
+import soundfile as sf
+from datetime import datetime
+
 # 音声を加工する関数を読み込む
 import process
 
@@ -8,43 +11,44 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
 def upload_file():
-    methods = [
-            {"display": "robopitch, 窓長512サンプル", "code": "robopitch_512"},
-            {"display": "robopitch, 窓長1024サンプル", "code": "robopitch_1024"},
-            {"display": "Inharmonic Warping, all, 一次関数", "code": "iw_all_1"},
-            {"display": "Inharmonic Warping, vib, 一次関数", "code": "iw_vib_1"},
-            {"display": "Inharmonic Warping, all, 二次関数", "code": "iw_all_2"},
-            {"display": "Inharmonic Warping, vib, 二次関数", "code": "iw_vib_2"}
-        ]
     if request.method == "GET":
-        return render_template("index.html", methods=methods)
+        return render_template("index.html")
     if request.method == "POST":
-        select_method = request.form["process_method"]
-        for i in range(len(methods)):
-            if methods[i]["code"] == select_method:
-                methods[i]["selected"] = True
-        result = int(request.form["parameter"])
+        # formの入力を辞書型で取得
+        result = request.form.to_dict()
         infile = "/work/miyamoto/bthesis/wav_original/CJF04/01.wav"
-        if select_method == "robopitch_512":
-            threshold = result * 3 / 100
-            filepath = process.robopitch(infile, 512, threshold)
-        elif select_method == "robopitch_1024":
-            threshold = result * 3 / 100
-            filepath = process.robopitch(infile, 1024, threshold)
-        elif select_method == "iw_all_1":
-            threshold = result * 120 / 100
-            filepath = process.inharmonic_warping(infile, "all", 1, threshold)
-        elif select_method == "iw_all_2":
-            threshold = (101-result) * 64 / 100
-            filepath = process.inharmonic_warping(infile, "all", 2, threshold)
-        elif select_method == "iw_vib_1":
-            threshold = result * 120 / 100
-            filepath = process.inharmonic_warping(infile, "vib", 1, threshold)
-        elif select_method == "iw_vib_2":
-            threshold = (101-result) * 64 / 100
-            filepath = process.inharmonic_warping(infile, "vib", 2, threshold)
+        if "RP_toggle" in result and "IW_toggle" in result:
+            # robopitchで加工
+            threshold = int(result["RP_threshold"]) * 3 / 100
+            win_len = 512 if result["RP_win_length"] == "1" else 1024
+            filepath = process.robopitch(infile, win_len, threshold)
+            # IWで加工
+            spectrum = "all" if result["IW_spectrum"] == "1" else "vib"
+            function = int(result["IW_function"])
+            if function == 1:
+                parameter = int(result["IW_parameter"]) * 120 / 100
+            else:
+                parameter = (101 - int(result["IW_parameter"])) * 64 / 100
+            filepath = process.inharmonic_warping(filepath, spectrum, function, parameter)
+        elif "RP_toggle" in result:
+            threshold = int(result["RP_threshold"]) * 3 / 100
+            win_len = 512 if result["RP_win_length"] == "1" else 1024
+            filepath = process.robopitch(infile, win_len, threshold)
+        elif "IW_toggle" in result:
+            spectrum = "all" if result["IW_spectrum"] == "1" else "vib"
+            function = int(result["IW_function"])
+            if function == 1:
+                parameter = int(result["IW_parameter"]) * 120 / 100
+            else:
+                parameter = (101 - int(result["IW_parameter"])) * 64 / 100
+            filepath = process.inharmonic_warping(infile, spectrum, function, parameter)
+        else:
+            # 加工なしの音声をstaticに保存
+            data, fs = sf.read(infile)
+            filepath = "./static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
+            sf.write(filepath, data, fs)
         
-        return render_template("index.html", methods=methods, filepath=filepath, result=result)
+        return render_template("index.html", filepath=filepath, result=result)
 
 if __name__ == "__main__":
     app.run(port=8000, debug=True)
