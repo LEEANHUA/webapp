@@ -11,36 +11,56 @@
                 <div class="method">
                     {% if result['RP_toggle'] %}
                         <label class="toggle">
-                            <input type="checkbox" name="RP_toggle" checked>
+                            <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()" checked>
                         </label>
                     {% else %}
                         <label class="toggle">
-                            <input type="checkbox" name="RP_toggle">
+                            <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()">
                         </label>
                     {% endif %}
                     Robopitch
                     <p>threshold</p>
-                    <input type="range" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
+                    {% if result['RP_toggle'] %}
+                        <input type="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
+                    {% else %}
+                        <input type="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1" disabled>
+                    {% endif %}
                     <p>window_length</p>
-                    <input type="range" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1">
+                    {% if result['RP_toggle'] %}
+                        <input type="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1">
+                    {% else %}
+                        <input type="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1" disabled>
+                    {% endif %}
                 </div>
                 <div class="method">
                     {% if result['IW_toggle'] %}
                         <label class="toggle">
-                            <input type="checkbox" name="IW_toggle" checked>
+                            <input type="checkbox" id="InharmonicWarpingToggle" name="IW_toggle" onchange="InharmonicWarpingOnchange()" checked>
                         </label>
                     {% else %}
                         <label class="toggle">
-                            <input type="checkbox" name="IW_toggle">
+                            <input type="checkbox" id="InharmonicWarpingToggle" name="IW_toggle" onchange="InharmonicWarpingOnchange()">
                         </label>
                     {% endif %}
                     Inharmonic Warping
                     <p>parameter</p>
-                    <input type="range" name="IW_parameter" min="1" max="100" value="{{ result['IW_parameter'] }}" step="1">
+                    {% if result['IW_toggle'] %}
+                        <input type="range" id="InharmonicWarpingParameter" name="IW_parameter" min="1" max="100" value="{{ result['IW_parameter'] }}" step="1">
+                    {% else %}
+                        <input type="range" id="InharmonicWarpingParameter" name="IW_parameter" min="1" max="100" value="{{ result['IW_parameter'] }}" step="1" disabled>
+                    {% endif %}
                     <p>spectrum</p>
-                    <input type="range" name="IW_spectrum" min="1" max="2" value="{{ result['IW_spectrum'] }}" step="1">
+                    {% if result['IW_toggle'] %}
+                        <input type="range" id="InharmonicWarpingSpectrum" name="IW_spectrum" min="1" max="2" value="{{ result['IW_spectrum'] }}" step="1">
+                    {% else %}
+                        <input type="range" id="InharmonicWarpingSpectrum" name="IW_spectrum" min="1" max="2" value="{{ result['IW_spectrum'] }}" step="1" disabled>
+                    {% endif %}
                     <p>function</p>
-                    <input type="range" name="IW_function" min="1" max="2" value="{{ result['IW_function'] }}" step="1">
+                    {% if result['IW_toggle'] %}
+                        <input type="range" id="InharmonicWarpingFunction" name="IW_function" min="1" max="2" value="{{ result['IW_function'] }}" step="1">
+                    {% else %}
+                        <input type="range" id="InharmonicWarpingFunction" name="IW_function" min="1" max="2" value="{{ result['IW_function'] }}" step="1" disabled>
+                    {% endif %}
                 </div>
             </div>
             <div>
@@ -51,5 +71,6 @@
         {% if filepath %}
         <audio controls autoplay src="{{ filepath }}" type="audio/wav"></audio>
         {% endif %}
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
     </body>
 </html>
