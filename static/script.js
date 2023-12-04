@@ -1,3 +1,27 @@
+// input要素
+const inputElements = document.getElementsByClassName('range');
+
+// 埋め込む先の要素
+const currentValueElements = document.getElementsByTagName("span");
+
+// 現在の値を埋め込む関数
+const setCurrentValue = (elements, targets) => {
+    for (let i = 0; i < elements.length; i++) {
+        targets[i].innerText = elements[i].value;
+    }
+}
+
+window.onload = () => {
+    for (let i = 0; i < inputElements.length; i++) {
+        // 変更に合わせてイベントを発火する
+        inputElements[i].addEventListener('input', () => {
+            setCurrentValue(inputElements, currentValueElements)
+        });
+        // ページ読み込み時の値をセット
+        setCurrentValue(inputElements, currentValueElements);
+    }
+}
+
 function RobopitchOnchange() {
     if(document.getElementById("RobopitchToggle").checked) {
         document.getElementById("RobopitchThreshold").disabled = false;
@@ -7,6 +31,7 @@ function RobopitchOnchange() {
         document.getElementById("RobopitchWindowLength").disabled = true;
         document.getElementById("RobopitchThreshold").value = "1";
         document.getElementById("RobopitchWindowLength").value = "1";
+        setCurrentValue(inputElements, currentValueElements);
     }
 }
 
@@ -22,6 +47,7 @@ function InharmonicWarpingOnchange() {
         document.getElementById("InharmonicWarpingParameter").value = "1";
         document.getElementById("InharmonicWarpingSpectrum").value = "1";
         document.getElementById("InharmonicWarpingFunction").value = "1";
+        setCurrentValue(inputElements, currentValueElements);
     }
 }
 
