@@ -5,6 +5,8 @@ function RobopitchOnchange() {
     }else {
         document.getElementById("RobopitchThreshold").disabled = true;
         document.getElementById("RobopitchWindowLength").disabled = true;
+        document.getElementById("RobopitchThreshold").value = "1";
+        document.getElementById("RobopitchWindowLength").value = "1";
     }
 }
 
@@ -17,6 +19,9 @@ function InharmonicWarpingOnchange() {
         document.getElementById("InharmonicWarpingParameter").disabled = true;
         document.getElementById("InharmonicWarpingSpectrum").disabled = true;
         document.getElementById("InharmonicWarpingFunction").disabled = true;
+        document.getElementById("InharmonicWarpingParameter").value = "1";
+        document.getElementById("InharmonicWarpingSpectrum").value = "1";
+        document.getElementById("InharmonicWarpingFunction").value = "1";
     }
 }
 
