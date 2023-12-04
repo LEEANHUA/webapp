@@ -19,3 +19,17 @@ function InharmonicWarpingOnchange() {
         document.getElementById("InharmonicWarpingFunction").disabled = true;
     }
 }
+
+function resetParameter() {
+    // robopitchの入力をリセット
+    document.getElementById("RobopitchThreshold").value = "1";
+    document.getElementById("RobopitchWindowLength").value = "1";
+    document.getElementById("RobopitchToggle").checked = false;
+    RobopitchOnchange();
+    // IWの入力をリセット
+    document.getElementById("InharmonicWarpingParameter").value = "1";
+    document.getElementById("InharmonicWarpingSpectrum").value = "1";
+    document.getElementById("InharmonicWarpingFunction").value = "1";
+    document.getElementById("InharmonicWarpingToggle").checked = false;
+    InharmonicWarpingOnchange();
+}
