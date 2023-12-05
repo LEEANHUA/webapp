@@ -22,15 +22,24 @@
                     <p>threshold: <span id="currentThreshold"></span></p>
                     {% if result['RP_toggle'] %}
                         <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
+                    {% elif result['RP_threshold'] %}
+                        <!-- toggleが選択されていないときはdisabledに -->
+                        <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1" disabled>
                     {% else %}
                         <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="1" step="1" disabled>
                     {% endif %}
+                    <!-- rangeがdisabledのとき、valueを送信することができたいため、hiddenにvalueをコピーして送信する -->
+                    <!-- 受信側で同様に処理できるようにnameは同じに -->
+                    <input type="hidden" class="hidden" name="RP_threshold" value="">
                     <p>window_length: <span id="currentWindowLength"></span></p>
                     {% if result['RP_toggle'] %}
                         <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1">
+                    {% elif result['RP_win_length'] %}
+                        <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1" disabled>
                     {% else %}
                         <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="1" step="1" disabled>
                     {% endif %}
+                    <input type="hidden" class="hidden" name="RP_win_length" value="">
                 </div>
                 <div class="method">
                     {% if result['IW_toggle'] %}
@@ -46,25 +55,35 @@
                     <p>parameter: <span id="currentParameter"></span></p>
                     {% if result['IW_toggle'] %}
                         <input type="range" class="range" id="InharmonicWarpingParameter" name="IW_parameter" min="1" max="100" value="{{ result['IW_parameter'] }}" step="1">
+                    {% elif result['IW_parameter'] %}
+                        <input type="range" class="range" id="InharmonicWarpingParameter" name="IW_parameter" min="1" max="100" value="{{ result['IW_parameter'] }}" step="1" disabled>
                     {% else %}
                         <input type="range" class="range" id="InharmonicWarpingParameter" name="IW_parameter" min="1" max="100" value="1" step="1" disabled>
                     {% endif %}
+                    <input type="hidden" class="hidden" name="IW_parameter" value="">
                     <p>spectrum: <span id="currentSpectrum"></span></p>
                     {% if result['IW_toggle'] %}
                         <input type="range" class="range" id="InharmonicWarpingSpectrum" name="IW_spectrum" min="1" max="2" value="{{ result['IW_spectrum'] }}" step="1">
+                    {% elif result['IW_spectrum'] %}
+                        <input type="range" class="range" id="InharmonicWarpingSpectrum" name="IW_spectrum" min="1" max="2" value="{{ result['IW_spectrum'] }}" step="1" disabled>
                     {% else %}
                         <input type="range" class="range" id="InharmonicWarpingSpectrum" name="IW_spectrum" min="1" max="2" value="1" step="1" disabled>
                     {% endif %}
+                    <input type="hidden" class="hidden" name="IW_spectrum" value="">
                     <p>function: <span id="currentFunction"></span></p>
                     {% if result['IW_toggle'] %}
                         <input type="range" class="range" id="InharmonicWarpingFunction" name="IW_function" min="1" max="2" value="{{ result['IW_function'] }}" step="1">
+                    {% elif result['IW_function'] %}
+                        <input type="range" class="range" id="InharmonicWarpingFunction" name="IW_function" min="1" max="2" value="{{ result['IW_function'] }}" step="1" disabled>
                     {% else %}
                         <input type="range" class="range" id="InharmonicWarpingFunction" name="IW_function" min="1" max="2" value="1" step="1" disabled>
                     {% endif %}
+                    <input type="hidden" class="hidden" name="IW_function" value="">
                 </div>
             </div>
             <div>
-                <input type="submit" value="加工">
+                <!-- 送信時にrangeの値をhiddenにコピーする関数を走らせる -->
+                <input type="submit" value="加工" onclick="rangeValueCopy()">
                 <button type="button" onclick="resetParameter()">リセット</button>
             </div>
         </form>
