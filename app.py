@@ -21,7 +21,6 @@ def upload_file():
             # robopitchで加工
             threshold = int(result["RP_threshold"]) * 3 / 100
             win_len = 512 if result["RP_win_length"] == "1" else 1024
-            filepath = process.robopitch(infile, win_len, threshold)
             # IWで加工
             spectrum = "all" if result["IW_spectrum"] == "1" else "vib"
             function = int(result["IW_function"])
@@ -29,7 +28,7 @@ def upload_file():
                 parameter = int(result["IW_parameter"]) * 120 / 100
             else:
                 parameter = (101 - int(result["IW_parameter"])) * 64 / 100
-            filepath = process.inharmonic_warping(filepath, spectrum, function, parameter)
+            filepath = process.robopitch_IW(infile, win_len, threshold, spectrum, function, parameter)
         elif "RP_toggle" in result:
             threshold = int(result["RP_threshold"]) * 3 / 100
             win_len = 512 if result["RP_win_length"] == "1" else 1024
