@@ -128,7 +128,7 @@ def robopitch(infile, win_size, threshold):
     fs, f0, ap, sp = feature_extract(infile)
     f0_fs = norm_threshold(infile, f0, voice_len, threshold)
     output_audio = robotization(input_audio, win_size, f0_fs, fs)
-    outfile = "./static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
+    outfile = "/home/miyamoto/public_html/webapp/apps/static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
     sf.write(outfile, output_audio, fs, subtype='FLOAT')
     return outfile
 
@@ -264,7 +264,7 @@ def inharmonic_warping(infile, spectrum, function, parameter):
     data, fs = sf.read(infile)
     STFT = np.abs(increase_inharmonicity(data, spectrum, function, parameter, fs))
     data_griffinlim = librosa.griffinlim(STFT, n_iter=100, window="blackman", init = None)
-    outfile = "./static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
+    outfile = "/home/miyamoto/public_html/webapp/apps/static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
     sf.write(outfile, data_griffinlim/max(data_griffinlim), fs)
     return outfile
 
@@ -278,6 +278,6 @@ def robopitch_IW(infile, win_size, threshold, spectrum, function, parameter):
     # IW
     STFT = np.abs(increase_inharmonicity(data, spectrum, function, parameter, fs))
     data_griffinlim = librosa.griffinlim(STFT, n_iter=100, window="blackman", init = None)
-    outfile = "./static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
+    outfile = "/home/miyamoto/public_html/webapp/apps/static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
     sf.write(outfile, data_griffinlim/max(data_griffinlim), fs)
     return outfile

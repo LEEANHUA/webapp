@@ -2,17 +2,17 @@ import soundfile as sf
 from datetime import datetime
 
 # 音声を加工する関数を読み込む
-import process
+import apps.processor.process as process
 
 # Flask関連
-from flask import Flask, render_template, request
+from flask import Blueprint, render_template, request
 
-app = Flask(__name__)
+processor = Blueprint("processor", __name__, template_folder="templates")
 
-@app.route("/", methods=["GET", "POST"])
-def upload_file():
+@processor.route("/", methods=["GET", "POST"])
+def index():
     if request.method == "GET":
-        return render_template("index.html", result={})
+        return render_template("processor/index.html", result={})
     if request.method == "POST":
         # formの入力を辞書型で取得
         result = request.form.to_dict()
@@ -44,10 +44,7 @@ def upload_file():
         else:
             # 加工なしの音声をstaticに保存
             data, fs = sf.read(infile)
-            filepath = "./static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
+            filepath = "/home/miyamoto/public_html/webapp/apps/static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
             sf.write(filepath, data, fs)
         
-        return render_template("index.html", filepath=filepath, result=result)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+        return render_template("processor/index.html", filepath=filepath, result=result)
