@@ -18,7 +18,7 @@ def index():
         # formの入力を辞書型で取得
         result = request.form.to_dict()
         infile = "/work/miyamoto/bthesis/wav_original/CJF04/01.wav"
-        filename = datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
+        filename = "audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
         filepath = Path(
             current_app.config["UPLOAD_FOLDER"], filename
         )
