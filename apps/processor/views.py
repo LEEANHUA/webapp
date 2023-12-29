@@ -1,11 +1,12 @@
 import soundfile as sf
 from datetime import datetime
+from pathlib import Path
 
 # 音声を加工する関数を読み込む
 import apps.processor.process as process
 
 # Flask関連
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, current_app, send_from_directory
 
 processor = Blueprint("processor", __name__, template_folder="templates")
 
@@ -17,34 +18,22 @@ def index():
         # formの入力を辞書型で取得
         result = request.form.to_dict()
         infile = "/work/miyamoto/bthesis/wav_original/CJF04/01.wav"
-        if "RP_toggle" in result and "IW_toggle" in result:
-            # robopitchで加工
+        filename = datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
+        filepath = Path(
+            current_app.config["UPLOAD_FOLDER"], filename
+        )
+        if "RP_toggle" in result:
             threshold = int(result["RP_threshold"]) * 3 / 100
             win_len = 512 if result["RP_win_length"] == "1" else 1024
-            # IWで加工
-            spectrum = "all" if result["IW_spectrum"] == "1" else "vib"
-            function = int(result["IW_function"])
-            if function == 1:
-                parameter = int(result["IW_parameter"]) * 120 / 100
-            else:
-                parameter = (101 - int(result["IW_parameter"])) * 64 / 100
-            filepath = process.robopitch_IW(infile, win_len, threshold, spectrum, function, parameter)
-        elif "RP_toggle" in result:
-            threshold = int(result["RP_threshold"]) * 3 / 100
-            win_len = 512 if result["RP_win_length"] == "1" else 1024
-            filepath = process.robopitch(infile, win_len, threshold)
-        elif "IW_toggle" in result:
-            spectrum = "all" if result["IW_spectrum"] == "1" else "vib"
-            function = int(result["IW_function"])
-            if function == 1:
-                parameter = int(result["IW_parameter"]) * 120 / 100
-            else:
-                parameter = (101 - int(result["IW_parameter"])) * 64 / 100
-            filepath = process.inharmonic_warping(infile, spectrum, function, parameter)
+            output_audio, fs = process.robopitch(infile, win_len, threshold)
+            sf.write(filepath, output_audio, fs, subtype='FLOAT')
         else:
             # 加工なしの音声をstaticに保存
             data, fs = sf.read(infile)
-            filepath = "/home/miyamoto/public_html/webapp/apps/static/audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
             sf.write(filepath, data, fs)
         
-        return render_template("processor/index.html", filepath=filepath, result=result)
+        return render_template("processor/index.html", filename=filename, result=result)
+    
+@processor.route("/audio/<path:filename>")
+def audio_file(filename):
+    return send_from_directory(current_app.config["UPLOAD_FOLDER"], filename)

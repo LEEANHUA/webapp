@@ -41,45 +41,6 @@
                     {% endif %}
                     <input type="hidden" class="hidden" name="RP_win_length" value="">
                 </div>
-                <div class="method">
-                    {% if result['IW_toggle'] %}
-                        <label class="toggle">
-                            <input type="checkbox" id="InharmonicWarpingToggle" name="IW_toggle" onchange="InharmonicWarpingOnchange()" checked>
-                        </label>
-                    {% else %}
-                        <label class="toggle">
-                            <input type="checkbox" id="InharmonicWarpingToggle" name="IW_toggle" onchange="InharmonicWarpingOnchange()">
-                        </label>
-                    {% endif %}
-                    Inharmonic Warping
-                    <p>parameter: <span id="currentParameter"></span></p>
-                    {% if result['IW_toggle'] %}
-                        <input type="range" class="range" id="InharmonicWarpingParameter" name="IW_parameter" min="1" max="100" value="{{ result['IW_parameter'] }}" step="1">
-                    {% elif result['IW_parameter'] %}
-                        <input type="range" class="range" id="InharmonicWarpingParameter" name="IW_parameter" min="1" max="100" value="{{ result['IW_parameter'] }}" step="1" disabled>
-                    {% else %}
-                        <input type="range" class="range" id="InharmonicWarpingParameter" name="IW_parameter" min="1" max="100" value="1" step="1" disabled>
-                    {% endif %}
-                    <input type="hidden" class="hidden" name="IW_parameter" value="">
-                    <p>spectrum: <span id="currentSpectrum"></span></p>
-                    {% if result['IW_toggle'] %}
-                        <input type="range" class="range" id="InharmonicWarpingSpectrum" name="IW_spectrum" min="1" max="2" value="{{ result['IW_spectrum'] }}" step="1">
-                    {% elif result['IW_spectrum'] %}
-                        <input type="range" class="range" id="InharmonicWarpingSpectrum" name="IW_spectrum" min="1" max="2" value="{{ result['IW_spectrum'] }}" step="1" disabled>
-                    {% else %}
-                        <input type="range" class="range" id="InharmonicWarpingSpectrum" name="IW_spectrum" min="1" max="2" value="1" step="1" disabled>
-                    {% endif %}
-                    <input type="hidden" class="hidden" name="IW_spectrum" value="">
-                    <p>function: <span id="currentFunction"></span></p>
-                    {% if result['IW_toggle'] %}
-                        <input type="range" class="range" id="InharmonicWarpingFunction" name="IW_function" min="1" max="2" value="{{ result['IW_function'] }}" step="1">
-                    {% elif result['IW_function'] %}
-                        <input type="range" class="range" id="InharmonicWarpingFunction" name="IW_function" min="1" max="2" value="{{ result['IW_function'] }}" step="1" disabled>
-                    {% else %}
-                        <input type="range" class="range" id="InharmonicWarpingFunction" name="IW_function" min="1" max="2" value="1" step="1" disabled>
-                    {% endif %}
-                    <input type="hidden" class="hidden" name="IW_function" value="">
-                </div>
             </div>
             <div>
                 <!-- 送信時にrangeの値をhiddenにコピーする関数を走らせる -->
@@ -88,8 +49,8 @@
             </div>
         </form>
         <hr>
-        {% if filepath %}
-        <audio controls autoplay src="{{ filepath }}" type="audio/wav"></audio>
+        {% if filename %}
+        <audio controls autoplay src="{{ url_for('processor.audio_file', filename=filename) }}" type="audio/wav"></audio>
         {% endif %}
         <script src="{{ url_for('static', filename='script.js') }}"></script>
     </body>

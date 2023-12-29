@@ -1,6 +1,9 @@
 from flask import Flask
+from apps.config import config
 
 app = Flask(__name__)
+
+app.config.from_object(config["local"])
 
 from apps.processor import views as processor_views
 
