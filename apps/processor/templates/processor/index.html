@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>WebApp</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+        <link rel="stylesheet" href="{{ url_for('processor.static', filename='stylesheet.css') }}">
     </head>
     <body>
         <form action="" method="POST">
@@ -52,6 +52,6 @@
         {% if filename %}
         <audio controls autoplay src="{{ url_for('processor.audio_file', filename=filename) }}" type="audio/wav"></audio>
         {% endif %}
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('processor.static', filename='script.js') }}"></script>
     </body>
 </html>

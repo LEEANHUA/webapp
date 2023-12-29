@@ -7,7 +7,7 @@ app.config.from_object(config["local"])
 
 from apps.processor import views as processor_views
 
-app.register_blueprint(processor_views.processor)
+app.register_blueprint(processor_views.processor, url_prefix="/processor")
 
 if __name__ == "__main__":
     app.run(debug=True)

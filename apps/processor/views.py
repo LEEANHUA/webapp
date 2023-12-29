@@ -8,7 +8,7 @@ import apps.processor.process as process
 # Flask関連
 from flask import Blueprint, render_template, request, current_app, send_from_directory
 
-processor = Blueprint("processor", __name__, template_folder="templates")
+processor = Blueprint("processor", __name__, template_folder="templates", static_folder="static")
 
 @processor.route("/", methods=["GET", "POST"])
 def index():
