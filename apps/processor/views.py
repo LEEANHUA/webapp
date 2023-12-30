@@ -14,7 +14,7 @@ processor = Blueprint("processor", __name__, template_folder="templates", static
 def index(number):
     number = int(number)
     if request.method == "GET":
-        return render_template("processor/index.html", result={}, imagefile=session["imagefiles"][number], number=number, total=session["total"])
+        return render_template("processor/index.html", result={}, imagefile=session["imagefiles"][number])
     if request.method == "POST":
         # formの入力を辞書型で取得
         result = request.form.to_dict()
@@ -34,7 +34,7 @@ def index(number):
                 # 加工なしの音声をstaticに保存
                 data, fs = sf.read(infile)
                 sf.write(filepath, data, fs)
-            return render_template("processor/index.html", filename=filename, result=result, imagefile=session["imagefiles"][number], number=number, total=session["total"])
+            return render_template("processor/index.html", filename=filename, result=result, imagefile=session["imagefiles"][number])
         else:
             if number + 1 == session["total"]:
                 return redirect(url_for("guide.end"))
