@@ -6,14 +6,14 @@ from pathlib import Path
 import apps.processor.process as process
 
 # Flask関連
-from flask import Blueprint, render_template, request, current_app, send_from_directory
+from flask import Blueprint, render_template, request, current_app, send_from_directory, session
 
 processor = Blueprint("processor", __name__, template_folder="templates", static_folder="static")
 
 @processor.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "GET":
-        return render_template("processor/index.html", result={})
+        return render_template("processor/index.html", result={}, imagefile=session["imagefile"])
     if request.method == "POST":
         # formの入力を辞書型で取得
         result = request.form.to_dict()
@@ -32,8 +32,12 @@ def index():
             data, fs = sf.read(infile)
             sf.write(filepath, data, fs)
         
-        return render_template("processor/index.html", filename=filename, result=result)
+        return render_template("processor/index.html", filename=filename, result=result, imagefile=session["imagefile"])
     
 @processor.route("/audio/<path:filename>")
 def audio_file(filename):
+    return send_from_directory(current_app.config["UPLOAD_FOLDER"], filename)
+
+@processor.route("/image/<path:filename>")
+def image_file(filename):
     return send_from_directory(current_app.config["UPLOAD_FOLDER"], filename)

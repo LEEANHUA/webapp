@@ -7,6 +7,7 @@
     </head>
     <body>
         <form action="" method="POST">
+            <img src="{{ url_for('processor.image_file', filename=imagefile) }}" alt="ロボット画像" width="300">
             <div class="methods">
                 <div class="method">
                     {% if result['RP_toggle'] %}
