@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="{{ url_for('processor.static', filename='stylesheet.css') }}">
     </head>
     <body>
-        <form action="" method="POST">
+        <form method="POST">
             <img src="{{ url_for('processor.image_file', filename=imagefile) }}" alt="ロボット画像" width="300">
             <div class="methods">
                 <div class="method">
@@ -45,14 +45,10 @@
             </div>
             <div>
                 <!-- 送信時にrangeの値をhiddenにコピーする関数を走らせる -->
-                <input type="submit" value="加工" onclick="rangeValueCopy()">
+                <input type="submit" name="button" value="加工" onclick="rangeValueCopy()">
                 <button type="button" onclick="resetParameter()">リセット</button>
             </div>
-            {% if number == total - 1 %}
-            <a href="{{ url_for('guide.end') }}">決定</a>
-            {% else %}
-            <a href="{{ url_for('processor.index', number=number+1) }}">決定</a>
-            {% endif %}
+            <input type="submit" name="button" value="決定">
         </form>
         <hr>
         {% if filename %}
