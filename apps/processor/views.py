@@ -10,10 +10,11 @@ from flask import Blueprint, render_template, request, current_app, send_from_di
 
 processor = Blueprint("processor", __name__, template_folder="templates", static_folder="static")
 
-@processor.route("/", methods=["GET", "POST"])
-def index():
+@processor.route("/<number>", methods=["GET", "POST"])
+def index(number):
+    number = int(number)
     if request.method == "GET":
-        return render_template("processor/index.html", result={}, imagefile=session["imagefile"])
+        return render_template("processor/index.html", result={}, imagefile=session["imagefiles"][number], number=number, total=session["total"])
     if request.method == "POST":
         # formの入力を辞書型で取得
         result = request.form.to_dict()
@@ -32,7 +33,7 @@ def index():
             data, fs = sf.read(infile)
             sf.write(filepath, data, fs)
         
-        return render_template("processor/index.html", filename=filename, result=result, imagefile=session["imagefile"])
+        return render_template("processor/index.html", filename=filename, result=result, imagefile=session["imagefiles"][number], number=number, total=session["total"])
     
 @processor.route("/audio/<path:filename>")
 def audio_file(filename):

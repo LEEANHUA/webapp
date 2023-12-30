@@ -48,7 +48,11 @@
                 <input type="submit" value="加工" onclick="rangeValueCopy()">
                 <button type="button" onclick="resetParameter()">リセット</button>
             </div>
+            {% if number == total - 1 %}
             <a href="{{ url_for('guide.end') }}">決定</a>
+            {% else %}
+            <a href="{{ url_for('processor.index', number=number+1) }}">決定</a>
+            {% endif %}
         </form>
         <hr>
         {% if filename %}
