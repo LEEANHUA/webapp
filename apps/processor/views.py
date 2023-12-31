@@ -1,6 +1,8 @@
 import soundfile as sf
 from datetime import datetime
 from pathlib import Path
+from apps.app import db
+from apps.processor.models import Answer
 
 # 音声を加工する関数を読み込む
 import apps.processor.process as process
@@ -35,6 +37,25 @@ def index(number):
                 sf.write(filepath, data, fs)
             return render_template("processor/index.html", filename=filename, result=result, imagefile=session["target_images"][number])
         else:
+            print(result)
+            if "RP_toggle" in result:
+                threshold = int(result["RP_threshold"]) * 3 / 100
+                win_len = 512 if result["RP_win_length"] == "1" else 1024
+                answer = Answer(
+                    image_path=session["target_images"][number],
+                    audio_path=session["original_audio"][number],
+                    processed=True,
+                    threshold=threshold,
+                    window_length=win_len,
+                )
+            else:
+                answer = Answer(
+                    image_path=session["target_images"][number],
+                    audio_path=session["original_audio"][number],
+                    processed=False,
+                )
+            db.session.add(answer)
+            db.session.commit()
             if number + 1 == session["total"]:
                 return redirect(url_for("guide.end"))
             else:
