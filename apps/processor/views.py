@@ -14,11 +14,11 @@ processor = Blueprint("processor", __name__, template_folder="templates", static
 def index(number):
     number = int(number)
     if request.method == "GET":
-        return render_template("processor/index.html", result={}, imagefile=session["imagefiles"][number])
+        return render_template("processor/index.html", result={}, imagefile=session["target_images"][number])
     if request.method == "POST":
         # formの入力を辞書型で取得
         result = request.form.to_dict()
-        infile = current_app.config["UPLOAD_FOLDER"] + "/" + session["audiofiles"][number]
+        infile = current_app.config["UPLOAD_FOLDER"] + "/" + session["original_audio"][number]
         filename = "processed_audio/" + datetime.now().strftime("%Y%m%d%H%M%S") + ".wav"
         filepath = Path(
             current_app.config["UPLOAD_FOLDER"], filename
@@ -33,7 +33,7 @@ def index(number):
                 # 加工なしの音声をstaticに保存
                 data, fs = sf.read(infile)
                 sf.write(filepath, data, fs)
-            return render_template("processor/index.html", filename=filename, result=result, imagefile=session["imagefiles"][number])
+            return render_template("processor/index.html", filename=filename, result=result, imagefile=session["target_images"][number])
         else:
             if number + 1 == session["total"]:
                 return redirect(url_for("guide.end"))

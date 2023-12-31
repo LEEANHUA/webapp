@@ -9,13 +9,13 @@ def index():
     speakers = ["CJF04", "CJF101", "EJF01", "EJF101", "EJF102", "CJM01", "EJM07", "EJM08", "EJM11", "EJM101"]
     male_speakers = ["CJM01", "EJM07", "EJM08", "EJM11", "EJM101"]
     female_speakers = ["CJF04", "CJF101", "EJF01", "EJF101", "EJF102"]
-    imagefiles = []
-    audiofiles = []
+    target_images = []
+    original_audio = []
     total = 10
     for i in range(total):
         robot_name = robot_names[random.randint(0, 9)]
-        imagefile = "robot_image/" + robot_name + "/" + robot_name + "_" + str(random.randint(1, 10)) + ".png"
-        imagefiles.append(imagefile)
+        image = "robot_image/" + robot_name + "/" + robot_name + "_" + str(random.randint(1, 10)) + ".png"
+        target_images.append(image)
         if robot_name == "man" or robot_name == "cyborg_man":
             speaker = male_speakers[random.randint(0, 4)]
         elif robot_name == "woman" or robot_name == "cyborg_woman":
@@ -23,10 +23,10 @@ def index():
         else:
             speaker = speakers[random.randint(0, 9)]
         audio_number = format(random.randint(1, 50), '02')
-        audiofile = "wav_original/" + speaker + "/" + audio_number + ".wav"
-        audiofiles.append(audiofile)
-    session["imagefiles"] = imagefiles
-    session["audiofiles"] = audiofiles
+        audio = "wav_original/" + speaker + "/" + audio_number + ".wav"
+        original_audio.append(audio)
+    session["target_images"] = target_images
+    session["original_audio"] = original_audio
     session["total"] = total
     return render_template("guide/index.html")
 
