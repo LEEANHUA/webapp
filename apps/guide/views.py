@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session
 import random
+import uuid
 
 guide = Blueprint("guide", __name__, template_folder="templates")
 
@@ -28,6 +29,7 @@ def index():
     session["target_images"] = target_images
     session["original_audio"] = original_audio
     session["total"] = total
+    session["uuid"] = str(uuid.uuid4())
     return render_template("guide/index.html")
 
 @guide.route("/end")
