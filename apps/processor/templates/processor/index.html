@@ -8,6 +8,13 @@
     <body>
         <form method="POST">
             <img src="{{ url_for('processor.image_file', filename=imagefile) }}" alt="ロボット画像" width="300">
+            <div>
+                <!-- 送信時にrangeの値をhiddenにコピーする関数を走らせる -->
+                <input type="submit" name="button" value="再生" onclick="rangeValueCopy()" id="playButton">
+                <time id="currentPosition">0:00</time> / <time id="endPosition">0:00</time>
+                <button type="button" onclick="resetParameter()">リセット</button>
+                <input type="submit" name="button" value="決定">
+            </div>
             <div class="methods">
                 <div class="method">
                     {% if result['RP_toggle'] %}
@@ -43,17 +50,9 @@
                     <input type="hidden" class="hidden" name="RP_win_length" value="">
                 </div>
             </div>
-            <div>
-                <!-- 送信時にrangeの値をhiddenにコピーする関数を走らせる -->
-                <input type="submit" name="button" value="再生" onclick="rangeValueCopy()" id="playButton">
-                <time id="currentPosition">0:00</time> / <time id="endPosition">0:00</time>
-                <button type="button" onclick="resetParameter()">リセット</button>
-            </div>
-            <input type="submit" name="button" value="決定">
         </form>
-        <hr>
         {% if filename %}
-        <audio controls autoplay src="{{ url_for('processor.audio_file', filename=filename) }}" type="audio/wav"></audio>
+        <audio autoplay src="{{ url_for('processor.audio_file', filename=filename) }}" type="audio/wav"></audio>
         {% endif %}
         <script src="{{ url_for('processor.static', filename='script.js') }}"></script>
     </body>
