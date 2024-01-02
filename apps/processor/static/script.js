@@ -68,3 +68,41 @@ function resetParameter() {
     document.getElementById("InharmonicWarpingToggle").checked = false;
     InharmonicWarpingOnchange();
 }
+
+window.addEventListener("DOMContentLoaded", function() {
+    const playButton = document.getElementById("playButton");
+    const currentPosition = document.getElementById("currentPosition");
+    const endPosition = document.getElementById("endPosition");
+    const audioElement = document.querySelector("audio");
+
+    let playtimer = null;
+
+    // 再生開始したときに実行
+    const startTimer = () => {
+        // setInterval(関数, 時間)で一定時間毎に関数の処理を行う
+        playtimer = setInterval(() => {
+            currentPosition.textContent = convertTime(audioElement.currentTime);
+        }, 500);
+    };
+
+    // 再生時間の表記を[mm:ss]に整える
+    const convertTime = (timePosition) => {
+        timePosition = Math.floor(timePosition);
+        let result = null;
+
+        if (timePosition >= 60) {
+            result = Math.floor(timePosition / 60);
+            result += ":" + Math.floor(timePosition % 60).toString().padStart(2, '0');
+        } else {
+            result = "0:" + Math.floor(timePosition).toString().padStart(2, '0');
+        }
+
+        return result;
+    };
+
+    window.onload = () => {
+        currentPosition.textContent = convertTime(audioElement.currentTime);
+        endPosition.textContent = convertTime(audioElement.duration);
+        startTimer();
+    };
+})

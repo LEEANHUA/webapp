@@ -25,7 +25,7 @@ def index(number):
         filepath = Path(
             current_app.config["UPLOAD_FOLDER"], filename
         )
-        if result["button"] == "加工":
+        if result["button"] == "再生":
             if "RP_toggle" in result:
                 threshold = int(result["RP_threshold"]) * 3 / 100
                 win_len = 512 if result["RP_win_length"] == "1" else 1024

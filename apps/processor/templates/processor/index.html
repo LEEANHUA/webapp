@@ -45,7 +45,8 @@
             </div>
             <div>
                 <!-- 送信時にrangeの値をhiddenにコピーする関数を走らせる -->
-                <input type="submit" name="button" value="加工" onclick="rangeValueCopy()">
+                <input type="submit" name="button" value="再生" onclick="rangeValueCopy()" id="playButton">
+                <time id="currentPosition">0:00</time> / <time id="endPosition">0:00</time>
                 <button type="button" onclick="resetParameter()">リセット</button>
             </div>
             <input type="submit" name="button" value="決定">
