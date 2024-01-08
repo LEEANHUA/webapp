@@ -13,7 +13,6 @@ class LocalConfig(BaseConfig):
 class TestingConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{basedir / 'testing.sqlite'}"
     SQLALCHEMY_TRACK_MODIFICATIONS=False
-    SQLALCHEMY_ECHO=True
     
 config = {
     "testing": TestingConfig,
