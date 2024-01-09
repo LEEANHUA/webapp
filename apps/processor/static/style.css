@@ -1,20 +1,70 @@
 body {
+  font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,"Yu Gothic",YuGothic,"ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ",Meiryo,sans-serif;
   font-size: 15pt;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff
 }
 
-.form {
-  width: 50%;
-  margin: 0 auto;
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto
+}
+
+.container:after,.container:before {
+  display: table;
+  content: " "
+}
+
+.container:after {
+  clear: both
+}
+
+@media (min-width: 768px) {
+  .container {
+    width:750px
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width:970px
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width:1170px
+  }
 }
 
 .robot-image{
   margin: auto;
   display: block;
+  width: 30%;
+}
+
+@media (max-width: 959px) {
+  .robot-image {
+    width: 50%;
+  }
+}
+@media (max-width: 480px) {
+	.robot-image {
+    width: 80%;
+  }
+}
+
+.btns {
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .btn {
   font-size: 15pt;
-  margin: 30px 10px 30px 10px;
+  margin: 5px;
   padding: 10px;
   color: #fff;
   border-radius: 10px;
