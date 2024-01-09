@@ -1,6 +1,4 @@
 body {
-  margin-left: 60px;
-  margin-right: 60px;
   font-size: 15pt;
 }
 
@@ -25,8 +23,12 @@ body {
   cursor: pointer;
 }
 
+.btn:hover {
+  opacity: 0.8;
+}
+
 .btn-play {
-  background-color: gray;
+  background-color: black;
 }
 
 .btn-reset {
