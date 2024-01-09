@@ -33,20 +33,6 @@ function RobopitchOnchange() {
     }
 }
 
-// IWのトグルがオンになったときに使用
-function InharmonicWarpingOnchange() {
-    if(document.getElementById("InharmonicWarpingToggle").checked) {
-        document.getElementById("InharmonicWarpingParameter").disabled = false;
-        document.getElementById("InharmonicWarpingSpectrum").disabled = false;
-        document.getElementById("InharmonicWarpingFunction").disabled = false;
-    }else {
-        document.getElementById("InharmonicWarpingParameter").disabled = true;
-        document.getElementById("InharmonicWarpingSpectrum").disabled = true;
-        document.getElementById("InharmonicWarpingFunction").disabled = true;
-        setCurrentValue(inputElements, currentValueElements);
-    }
-}
-
 // リセットボタンが押された時に使用
 function resetParameter() {
     // robopitchの入力をリセット
@@ -54,12 +40,6 @@ function resetParameter() {
     document.getElementById("RobopitchWindowLength").value = "1";
     document.getElementById("RobopitchToggle").checked = false;
     RobopitchOnchange();
-    // IWの入力をリセット
-    document.getElementById("InharmonicWarpingParameter").value = "1";
-    document.getElementById("InharmonicWarpingSpectrum").value = "1";
-    document.getElementById("InharmonicWarpingFunction").value = "1";
-    document.getElementById("InharmonicWarpingToggle").checked = false;
-    InharmonicWarpingOnchange();
 }
 
 window.addEventListener("DOMContentLoaded", function() {

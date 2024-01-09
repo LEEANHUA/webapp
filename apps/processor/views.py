@@ -37,7 +37,6 @@ def index(number):
                 sf.write(filepath, data, fs)
             return render_template("processor/index.html", filename=filename, result=result, imagefile=session["target_images"][number], number=number)
         else:
-            print(result)
             if "RP_toggle" in result:
                 threshold = int(result["RP_threshold"]) * 3 / 100
                 win_len = 512 if result["RP_win_length"] == "1" else 1024
