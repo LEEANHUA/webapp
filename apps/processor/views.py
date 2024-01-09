@@ -28,7 +28,7 @@ def index(number):
         if result["button"] == "再生":
             if "RP_toggle" in result:
                 threshold = int(result["RP_threshold"]) * 3 / 100
-                win_len = 512 if result["RP_win_length"] == "1" else 1024
+                win_len = int(result["RP_win_length"])
                 output_audio, fs = process.robopitch(infile, win_len, threshold)
                 sf.write(filepath, output_audio, fs, subtype='FLOAT')
             else:

@@ -43,11 +43,11 @@
                 <input type="hidden" class="hidden" name="RP_threshold" value="">
                 <p>window_length: <span id="currentWindowLength"></span></p>
                 {% if result['RP_toggle'] %}
-                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1">
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="{{ result['RP_win_length'] }}" step="512">
                 {% elif result['RP_win_length'] %}
-                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1" disabled>
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="{{ result['RP_win_length'] }}" step="512" disabled>
                 {% else %}
-                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="1" step="1" disabled>
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="512" step="512" disabled>
                 {% endif %}
                 <input type="hidden" class="hidden" name="RP_win_length" value="">
             </div>
