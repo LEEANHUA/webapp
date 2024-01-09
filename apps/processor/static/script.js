@@ -11,18 +11,8 @@ const setCurrentValue = (elements, targets) => {
     }
 }
 
-window.onload = () => {
-    for (let i = 0; i < inputElements.length; i++) {
-        // 変更に合わせてイベントを発火する
-        inputElements[i].addEventListener('input', () => {
-            setCurrentValue(inputElements, currentValueElements)
-        });
-        // ページ読み込み時の値をセット
-        setCurrentValue(inputElements, currentValueElements);
-    }
-}
-
 // rangeの値をhiddenにコピーする関数
+// 再生時に使用
 function rangeValueCopy() {
     const hiddenElements = document.getElementsByClassName('hidden');
     for (let i = 0; i < inputElements.length; i++) {
@@ -31,6 +21,7 @@ function rangeValueCopy() {
     return true;
 }
 
+// Robopitchのトグルがオンになったときに使用
 function RobopitchOnchange() {
     if(document.getElementById("RobopitchToggle").checked) {
         document.getElementById("RobopitchThreshold").disabled = false;
@@ -42,6 +33,7 @@ function RobopitchOnchange() {
     }
 }
 
+// IWのトグルがオンになったときに使用
 function InharmonicWarpingOnchange() {
     if(document.getElementById("InharmonicWarpingToggle").checked) {
         document.getElementById("InharmonicWarpingParameter").disabled = false;
@@ -55,6 +47,7 @@ function InharmonicWarpingOnchange() {
     }
 }
 
+// リセットボタンが押された時に使用
 function resetParameter() {
     // robopitchの入力をリセット
     document.getElementById("RobopitchThreshold").value = "1";
@@ -70,7 +63,16 @@ function resetParameter() {
 }
 
 window.addEventListener("DOMContentLoaded", function() {
-    const playButton = document.getElementById("playButton");
+    // ページ読み込み時の値をセット
+    setCurrentValue(inputElements, currentValueElements);
+
+    for (let i = 0; i < inputElements.length; i++) {
+        // 変更に合わせてイベントを発火する
+        inputElements[i].addEventListener('input', () => {
+            setCurrentValue(inputElements, currentValueElements)
+        });
+    }
+
     const currentPosition = document.getElementById("currentPosition");
     const endPosition = document.getElementById("endPosition");
     const audioElement = document.querySelector("audio");
@@ -100,9 +102,9 @@ window.addEventListener("DOMContentLoaded", function() {
         return result;
     };
 
-    window.onload = () => {
+    audioElement.addEventListener("loadeddata", (e) => {
         currentPosition.textContent = convertTime(audioElement.currentTime);
         endPosition.textContent = convertTime(audioElement.duration);
         startTimer();
-    };
+    });
 })
