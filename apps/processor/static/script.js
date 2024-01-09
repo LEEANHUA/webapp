@@ -67,6 +67,11 @@ window.addEventListener("DOMContentLoaded", function() {
         }, 500);
     };
 
+    // 停止したときに実行
+    const stopTimer = () => {
+        this.clearInterval(playtimer);
+    };
+
     // 再生時間の表記を[mm:ss]に整える
     const convertTime = (timePosition) => {
         timePosition = Math.floor(timePosition);
@@ -82,9 +87,18 @@ window.addEventListener("DOMContentLoaded", function() {
         return result;
     };
 
+    // 音声ファイルの再生準備が整ったときに実行
     audioElement.addEventListener("loadeddata", (e) => {
         currentPosition.textContent = convertTime(audioElement.currentTime);
         endPosition.textContent = convertTime(audioElement.duration);
         startTimer();
+        audioElement.play();
     });
+
+    // 音声ファイルが最後まで再生されたときに実行
+    audioElement.addEventListener("ended", e => {
+        stopTimer();
+        currentPosition.textContent = convertTime(audioElement.currentTime);
+    });
+  
 })
