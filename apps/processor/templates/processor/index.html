@@ -3,52 +3,53 @@
     <head>
         <meta charset="utf-8">
         <title>WebApp</title>
-        <link rel="stylesheet" href="{{ url_for('processor.static', filename='stylesheet.css') }}">
+        <link rel="stylesheet" href="{{ url_for('processor.static', filename='style.css') }}">
     </head>
     <body>
-        <form method="POST">
-            <img src="{{ url_for('processor.image_file', filename=imagefile) }}" alt="ロボット画像" width="300">
+        <form method="POST" class="form">
+            <div class="question-number">
+                問 {{ number + 1 }} / {{ session["total"] }}
+            </div>
+            <img src="{{ url_for('processor.image_file', filename=imagefile) }}" alt="ロボット画像" width="300" class="robot-image">
             <div>
                 <!-- 送信時にrangeの値をhiddenにコピーする関数を走らせる -->
-                <input type="submit" name="button" value="再生" onclick="rangeValueCopy()" id="playButton">
+                <input type="submit" name="button" value="再生" onclick="rangeValueCopy()" id="playButton" class="btn btn-play">
                 <time id="currentPosition">0:00</time> / <time id="endPosition">0:00</time>
-                <button type="button" onclick="resetParameter()">リセット</button>
-                <input type="submit" name="button" value="決定">
+                <button type="button" onclick="resetParameter()" class="btn btn-reset">リセット</button>
+                <input type="submit" name="button" value="この音声で決定" class="btn btn-decision">
             </div>
-            <div class="methods">
-                <div class="method">
-                    {% if result['RP_toggle'] %}
-                        <label class="toggle">
-                            <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()" checked>
-                        </label>
-                    {% else %}
-                        <label class="toggle">
-                            <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()">
-                        </label>
-                    {% endif %}
-                    Robopitch
-                    <p>threshold: <span id="currentThreshold"></span></p>
-                    {% if result['RP_toggle'] %}
-                        <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
-                    {% elif result['RP_threshold'] %}
-                        <!-- toggleが選択されていないときはdisabledに -->
-                        <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1" disabled>
-                    {% else %}
-                        <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="1" step="1" disabled>
-                    {% endif %}
-                    <!-- rangeがdisabledのとき、valueを送信することができたいため、hiddenにvalueをコピーして送信する -->
-                    <!-- 受信側で同様に処理できるようにnameは同じに -->
-                    <input type="hidden" class="hidden" name="RP_threshold" value="">
-                    <p>window_length: <span id="currentWindowLength"></span></p>
-                    {% if result['RP_toggle'] %}
-                        <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1">
-                    {% elif result['RP_win_length'] %}
-                        <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1" disabled>
-                    {% else %}
-                        <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="1" step="1" disabled>
-                    {% endif %}
-                    <input type="hidden" class="hidden" name="RP_win_length" value="">
-                </div>
+            <div class="method">
+                {% if result['RP_toggle'] %}
+                    <label class="toggle">
+                        <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()" checked>
+                    </label>
+                {% else %}
+                    <label class="toggle">
+                        <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()">
+                    </label>
+                {% endif %}
+                Robopitch
+                <p>threshold: <span id="currentThreshold"></span></p>
+                {% if result['RP_toggle'] %}
+                    <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
+                {% elif result['RP_threshold'] %}
+                    <!-- toggleが選択されていないときはdisabledに -->
+                    <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1" disabled>
+                {% else %}
+                    <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="1" step="1" disabled>
+                {% endif %}
+                <!-- rangeがdisabledのとき、valueを送信することができたいため、hiddenにvalueをコピーして送信する -->
+                <!-- 受信側で同様に処理できるようにnameは同じに -->
+                <input type="hidden" class="hidden" name="RP_threshold" value="">
+                <p>window_length: <span id="currentWindowLength"></span></p>
+                {% if result['RP_toggle'] %}
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1">
+                {% elif result['RP_win_length'] %}
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="{{ result['RP_win_length'] }}" step="1" disabled>
+                {% else %}
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="1" max="2" value="1" step="1" disabled>
+                {% endif %}
+                <input type="hidden" class="hidden" name="RP_win_length" value="">
             </div>
         </form>
         {% if filename %}
