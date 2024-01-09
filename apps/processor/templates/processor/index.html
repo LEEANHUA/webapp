@@ -28,8 +28,8 @@
                         <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()">
                     </label>
                 {% endif %}
-                Robopitch
-                <p>threshold: <span id="currentThreshold"></span></p>
+                音声を機械的に加工
+                <p>加工の強さ：<span id="currentThreshold"></span></p>
                 {% if result['RP_toggle'] %}
                     <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
                 {% elif result['RP_threshold'] %}
@@ -41,7 +41,7 @@
                 <!-- rangeがdisabledのとき、valueを送信することができたいため、hiddenにvalueをコピーして送信する -->
                 <!-- 受信側で同様に処理できるようにnameは同じに -->
                 <input type="hidden" class="hidden" name="RP_threshold" value="">
-                <p>window_length: <span id="currentWindowLength"></span></p>
+                <p>窓長：<span id="currentWindowLength"></span></p>
                 {% if result['RP_toggle'] %}
                     <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="{{ result['RP_win_length'] }}" step="512">
                 {% elif result['RP_win_length'] %}
