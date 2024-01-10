@@ -134,3 +134,15 @@ body {
 .toggle input {
   display: none;
 }
+
+.index-container h2 {
+  margin-bottom: 0;
+}
+
+.index-container a {
+  text-decoration: none;
+}
+
+.btn-next {
+  background-color: blue;
+}

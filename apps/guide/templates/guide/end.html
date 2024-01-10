@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>WebApp</title>
-    </head>
-    <body>
-        <h1>終了</h1>
-    </body>
-</html>
+{% extends "processor/base.html" %}
+{% block content %}
+<div class="container">
+    <h1>終了</h1>
+    <hr>
+    <p>以上で実験は終了です。ご協力ありがとうございました。</p>
+    <p>
+        下に示すランダムな文字列をランサーズの入力欄に記入してください。
+        <ul>
+            <li>{{ session["uuid"] }}</li>
+        </ul>
+    </p>
+</div>
+{% endblock %}

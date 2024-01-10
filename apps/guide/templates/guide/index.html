@@ -1,11 +1,22 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>WebApp</title>
-    </head>
-    <body>
-        <h1>最初の説明</h1>
-        <a href="{{ url_for('processor.index', number='0') }}">次へ</a>
-    </body>
-</html>
+{% extends "processor/base.html" %}
+{% block content %}
+<div class="container index-container">
+    <h1>画像に合うように音声を加工する実験</h1>
+    <h2>この実験について</h2>
+    <hr>
+    <p>
+        この実験では、画像のイメージに合うように音声を加工していただきます。<br>
+        人間の音声を機械的に加工し、ロボットのような音声に加工することができます。
+    </p>
+    <h2>加工のやり方</h2>
+    <hr>
+    <p>--------この部分は画像で説明----------</p>
+    <h2>実験における注意点</h2>
+    <hr>
+    <p>実験に際してはイヤホンまたはヘッドホンを用い、あらかじめ適切な音量に設定し、実験に参加していただきますようお願いします。</p>
+    <h3>説明を読んだら次に進んでください。</h3>
+    <div style="text-align: right;">
+        <a href="{{ url_for('processor.index', number='0') }}" class="btn btn-next">次へ</a>
+    </div>
+</div>
+{% endblock %}

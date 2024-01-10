@@ -1,6 +1,10 @@
 {% extends "processor/base.html" %}
 {% block content %}
 <div class="container">
+    <p>
+        画像のイメージに合うように、加工が必要か選択してください。<br>
+        必要な場合は加工の強さと窓長を選択してください。
+    </p>
     <form method="POST" class="form">
         <div class="question-number">
             問 {{ number + 1 }} / {{ session["total"] }}
