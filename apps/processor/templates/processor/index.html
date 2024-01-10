@@ -49,7 +49,7 @@
     </form>
 </div>
 {% if filename %}
-<audio controls src="{{ url_for('processor.audio_file', filename=filename) }}" type="audio/wav"></audio>
+<audio src="{{ url_for('processor.audio_file', filename=filename) }}" type="audio/wav"></audio>
 {% endif %}
 <script src="{{ url_for('processor.static', filename='script.js') }}"></script>
 {% endblock %}
