@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WebApp</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><!--表示サイズ,初期拡大率,適切な設定-->
+        <link rel="stylesheet" href="{{ url_for('processor.static', filename='style.css') }}">
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+</html>
