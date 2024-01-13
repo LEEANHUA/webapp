@@ -12,14 +12,14 @@ import math
 def feature_extract(file_name):
     f0_type = "harvest"
     data, fs = sf.read(file_name)
-    if f0_type == "dio":
-        _f0, t = pw.dio(data, fs)
-        f0 = pw.stonemask(data, _f0, t, fs)
-        ap = pw.d4c(data, f0, t, fs)
-        sp = pw.cheaptrick(data, f0, t, fs)
+    if f0_type == "dio":    # 高速・低精度
+        _f0, t = pw.dio(data, fs)   # 基本周波数の抽出
+        f0 = pw.stonemask(data, _f0, t, fs) # 基本周波数の修正
+        ap = pw.d4c(data, f0, t, fs)    # 非周期性指標の抽出
+        sp = pw.cheaptrick(data, f0, t, fs) # スペクトル包絡の抽出
         return fs, f0, ap, sp
-    elif f0_type == "harvest":
-        f0, t = pw.harvest(data, fs)
+    elif f0_type == "harvest":  # 低速・高精度
+        f0, t = pw.harvest(data, fs) # 基本周波数の推定
         ap = pw.d4c(data, f0, t, fs)
         sp = pw.cheaptrick(data, f0, t, fs)
         return fs, f0, ap, sp
