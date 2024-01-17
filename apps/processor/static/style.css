@@ -135,6 +135,21 @@ body {
   display: none;
 }
 
+input[type="range"] {
+  width: 20%;
+}
+
+@media (max-width: 959px) {
+  input[type="range"] {
+    width: 40%;
+  }
+}
+@media (max-width: 480px) {
+	input[type="range"] {
+    width: 60%;
+  }
+}
+
 .index-container h2 {
   margin-bottom: 0;
 }
