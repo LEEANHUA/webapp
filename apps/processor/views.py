@@ -39,7 +39,7 @@ def index(number):
         else:
             if "RP_toggle" in result:
                 threshold = int(result["RP_threshold"]) * 3 / 100
-                win_len = 512 if result["RP_win_length"] == "1" else 1024
+                win_len = int(result["RP_win_length"])
                 answer = Answer(
                     uuid=session["uuid"],
                     image_path=session["target_images"][number],
