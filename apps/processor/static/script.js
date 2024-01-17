@@ -25,10 +25,10 @@ function rangeValueCopy() {
 function RobopitchOnchange() {
     if(document.getElementById("RobopitchToggle").checked) {
         document.getElementById("RobopitchThreshold").disabled = false;
-        document.getElementById("RobopitchWindowLength").disabled = false;
+        // document.getElementById("RobopitchWindowLength").disabled = false;
     }else {
         document.getElementById("RobopitchThreshold").disabled = true;
-        document.getElementById("RobopitchWindowLength").disabled = true;
+        // document.getElementById("RobopitchWindowLength").disabled = true;
         setCurrentValue(inputElements, currentValueElements);
     }
 }
@@ -37,7 +37,7 @@ function RobopitchOnchange() {
 function resetParameter() {
     // robopitchの入力をリセット
     document.getElementById("RobopitchThreshold").value = "1";
-    document.getElementById("RobopitchWindowLength").value = "1";
+    // document.getElementById("RobopitchWindowLength").value = "1";
     document.getElementById("RobopitchToggle").checked = false;
     RobopitchOnchange();
 }

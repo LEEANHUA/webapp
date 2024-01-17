@@ -27,8 +27,10 @@ def index(number):
         )
         if result["button"] == "再生":
             if "RP_toggle" in result:
-                threshold = int(result["RP_threshold"]) * 3 / 100
-                win_len = int(result["RP_win_length"])
+                # 入力の範囲は1~100なので、それを1~2になるように調整
+                threshold = (int(result["RP_threshold"]) + 98) / 99
+                # 処理速度を早めるため、窓長は1024で固定
+                win_len = 1024
                 output_audio, fs = process.robopitch(infile, win_len, threshold)
                 sf.write(filepath, output_audio, fs, subtype='FLOAT')
             else:
@@ -38,8 +40,10 @@ def index(number):
             return render_template("processor/index.html", filename=filename, result=result, imagefile=session["target_images"][number], number=number)
         else:
             if "RP_toggle" in result:
-                threshold = int(result["RP_threshold"]) * 3 / 100
-                win_len = int(result["RP_win_length"])
+                # 入力の範囲は1~100なので、それを1~2になるように調整
+                threshold = (int(result["RP_threshold"]) + 98) / 99
+                # 処理速度を早めるため、窓長は1024で固定
+                win_len = 1024
                 answer = Answer(
                     uuid=session["uuid"],
                     image_path=session["target_images"][number],
