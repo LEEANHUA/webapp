@@ -161,3 +161,24 @@ input[type="range"] {
 .btn-next {
   background-color: blue;
 }
+
+.guide-image{
+  margin: auto;
+  display: inline-block;
+  width: 50%;
+}
+
+@media (max-width: 959px) {
+  .guide-image {
+    width: 80%;
+  }
+}
+@media (max-width: 480px) {
+	.guide-image {
+    width: 100%;
+  }
+}
+
+.guide-image-explain {
+  display: inline-block;
+}
