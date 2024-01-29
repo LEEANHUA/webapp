@@ -50,6 +50,27 @@
             {% endif %}
             <input type="hidden" class="hidden" name="RP_win_length" value=""> -->
         </div>
+        <div class="method">
+            {% if result['pitch_toggle'] %}
+                <label class="toggle">
+                    <input type="checkbox" id="pitchToggle" name="pitch_toggle" onchange="pitchOnchange()" checked>
+                </label>
+            {% else %}
+                <label class="toggle">
+                    <input type="checkbox" id="pitchToggle" name="pitch_toggle" onchange="pitchOnchange()">
+                </label>
+            {% endif %}
+            音声の高さを調整する
+            <p>変化: <span id="currentShift"></span></p>
+            {% if result['pitch_toggle'] %}
+                <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="{{ result['pitch_shift'] }}" step="1">
+            {% elif result['pitch_shift'] %}
+                <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="{{ result['pitch_shift'] }}" step="1" disabled>
+            {% else %}
+                <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="0" step="1" disabled>
+            {% endif %}
+            <input type="hidden" class="hidden" name="pitch_shift" value="">
+        </div>
     </form>
 </div>
 {% if filename %}

@@ -123,3 +123,9 @@ def robopitch(input_audio, fs, win_size, threshold):
     f0_fs = norm_threshold(input_audio, fs, f0, voice_len, threshold)
     output_audio = robotization(input_audio, win_size, f0_fs, fs)
     return output_audio, fs
+
+def pitch_shift(input_audio, fs, shift):
+    fs, f0, ap, sp = feature_extract(input_audio, fs)
+    f0 = np.where(f0 != 0, f0 + shift, f0)
+    output_audio = pw.synthesize(f0, sp, ap, fs)
+    return output_audio, fs

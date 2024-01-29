@@ -33,6 +33,15 @@ function RobopitchOnchange() {
     }
 }
 
+function pitchOnchange() {
+    if(document.getElementById("pitchToggle").checked) {
+        document.getElementById("pitchShift").disabled = false;
+    }else {
+        document.getElementById("pitchShift").disabled = true;
+        setCurrentValue(inputElements, currentValueElements);
+    }
+}
+
 // リセットボタンが押された時に使用
 function resetParameter() {
     // robopitchの入力をリセット
@@ -40,6 +49,10 @@ function resetParameter() {
     // document.getElementById("RobopitchWindowLength").value = "1";
     document.getElementById("RobopitchToggle").checked = false;
     RobopitchOnchange();
+    // F0シフトの入力をリセット
+    document.getElementById("pitchShift").value = "0";
+    document.getElementById("pitchToggle").checked = false;
+    pitchOnchange();
 }
 
 window.addEventListener("DOMContentLoaded", function() {

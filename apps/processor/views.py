@@ -28,6 +28,9 @@ def index(number):
         print(result)
         if result["button"] == "再生":
             input_audio, fs = sf.read(infile)
+            if "pitch_toggle" in result:
+                shift = int(result["pitch_shift"])
+                input_audio, fs = process.pitch_shift(input_audio, fs, shift)
             if "RP_toggle" in result:
                 # 入力の範囲は1~100なので、それを1~2になるように調整
                 threshold = (int(result["RP_threshold"]) + 98) / 99
