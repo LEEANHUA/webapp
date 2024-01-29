@@ -25,18 +25,19 @@ def index(number):
         filepath = Path(
             current_app.config["UPLOAD_FOLDER"], filename
         )
+        print(result)
         if result["button"] == "再生":
+            input_audio, fs = sf.read(infile)
             if "RP_toggle" in result:
                 # 入力の範囲は1~100なので、それを1~2になるように調整
                 threshold = (int(result["RP_threshold"]) + 98) / 99
                 # 処理速度を早めるため、窓長は1024で固定
                 win_len = 1024
-                output_audio, fs = process.robopitch(infile, win_len, threshold)
+                output_audio, fs = process.robopitch(input_audio, fs, win_len, threshold)
                 sf.write(filepath, output_audio, fs, subtype='FLOAT')
             else:
                 # 加工なしの音声をstaticに保存
-                data, fs = sf.read(infile)
-                sf.write(filepath, data, fs)
+                sf.write(filepath, input_audio, fs)
             return render_template("processor/index.html", filename=filename, result=result, imagefile=session["target_images"][number], number=number)
         else:
             if "RP_toggle" in result:

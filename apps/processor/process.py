@@ -9,9 +9,8 @@ import math
 
 #---------------------------robopirch---------------------------
 #特徴量抽出
-def feature_extract(file_name):
+def feature_extract(data, fs):
     f0_type = "harvest"
-    data, fs = sf.read(file_name)
     if f0_type == "dio":    # 高速・低精度
         _f0, t = pw.dio(data, fs)   # 基本周波数の抽出
         f0 = pw.stonemask(data, _f0, t, fs) # 基本周波数の修正
@@ -27,15 +26,15 @@ def feature_extract(file_name):
         raise ValueError("third argument must be \"harvest\" or \"dio\"")
 
 #メルケプ抽出
-def wav2mcep(file_name):
-    fs, f0, ap, sp = feature_extract(file_name)
+def wav2mcep(data, fs):
+    fs, f0, ap, sp = feature_extract(data, fs)
     mcep = pysptk.sp2mc(sp, order=40, alpha = 0.55)
     mcep = np.delete(mcep, 0, 1)
     return mcep
 
 #デルタ特徴量のノルム抽出
-def delta_norm_feature(file_name):
-    mcep = wav2mcep(file_name)
+def delta_norm_feature(data, fs):
+    mcep = wav2mcep(data, fs)
     delta = mcep
     n = len(mcep)
     m = len(mcep[0])
@@ -76,8 +75,8 @@ def f_mean_without_0(j, i, f):
         return 0
 
 #動的特徴量のノルムと閾値からf0を変換、ただしf0_fsはfsベース
-def norm_threshold(IN_FILE, f0, voice_len, threshold):
-    delta_norm = delta_norm_feature(IN_FILE)
+def norm_threshold(data, fs, f0, voice_len, threshold):
+    delta_norm = delta_norm_feature(data, fs)
     f0_fs = [0 for i in range(voice_len)]
     j = 0
     for i in range(len(delta_norm)):
@@ -118,10 +117,9 @@ def robotization(input_audio, win_size, f0_fs, fs):
     output_audio = output_audio / max(np.abs(output_audio))
     return output_audio
 
-def robopitch(infile, win_size, threshold):
-    input_audio, fs = sf.read(infile)
+def robopitch(input_audio, fs, win_size, threshold):
     voice_len = len(input_audio)
-    fs, f0, ap, sp = feature_extract(infile)
-    f0_fs = norm_threshold(infile, f0, voice_len, threshold)
+    fs, f0, ap, sp = feature_extract(input_audio, fs)
+    f0_fs = norm_threshold(input_audio, fs, f0, voice_len, threshold)
     output_audio = robotization(input_audio, win_size, f0_fs, fs)
     return output_audio, fs
