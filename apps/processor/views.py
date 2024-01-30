@@ -43,26 +43,16 @@ def index(number):
                 sf.write(filepath, input_audio, fs)
             return render_template("processor/index.html", filename=filename, result=result, imagefile=session["target_images"][number], number=number)
         else:
-            if "RP_toggle" in result:
-                # 入力の範囲は1~100なので、それを1~2になるように調整
-                threshold = (int(result["RP_threshold"]) + 98) / 99
-                # 処理速度を早めるため、窓長は1024で固定
-                win_len = 1024
-                answer = Answer(
-                    uuid=session["uuid"],
-                    image_path=session["target_images"][number],
-                    audio_path=session["original_audio"][number],
-                    processed=True,
-                    threshold=threshold,
-                    window_length=win_len,
-                )
-            else:
-                answer = Answer(
-                    uuid=session["uuid"],
-                    image_path=session["target_images"][number],
-                    audio_path=session["original_audio"][number],
-                    processed=False,
-                )
+            answer = Answer(
+                uuid=session["uuid"],
+                image_path=session["target_images"][number],
+                audio_path=session["original_audio"][number],
+                processed="RP_toggle" in result,
+                threshold=(int(result["RP_threshold"]) + 98) / 99 if "RP_toggle" in result else "",
+                window_length=1024 if "RP_toggle" in result else "",
+                pitch_shifted="pitch_toggle" in result,
+                pitch_shift=int(result["pitch_shift"]) if "pitch_toggle" in result else "",
+            )
             db.session.add(answer)
             db.session.commit()
             if number + 1 == session["total"]:

@@ -11,4 +11,6 @@ class Answer(db.Model):
     processed = db.Column(db.Boolean)
     threshold = db.Column(db.Integer)
     window_length = db.Column(db.Integer)
+    pitch_shifted = db.Column(db.Boolean)
+    pitch_shift = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, default=datetime.now)
