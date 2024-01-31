@@ -89,9 +89,36 @@ body {
   background-color: blue;
 }
 
+.methods {
+  display: flex;
+  justify-content: center;
+}
+
 .method {
-  width: 100%;
+  width: 30%;
   text-align: center;
+}
+
+@media (max-width: 959px) {
+  .method {
+    width: 40%;
+  }
+}
+
+@media (max-width: 480px) {
+	.methods {
+    display: block;
+    justify-content: center;
+  }
+
+  .method {
+    width: 100%;
+    padding-bottom: 20px;
+  }
+}
+
+.method b {
+  font-size: 22px;
 }
 
 .method p {
@@ -136,18 +163,7 @@ body {
 }
 
 input[type="range"] {
-  width: 20%;
-}
-
-@media (max-width: 959px) {
-  input[type="range"] {
-    width: 40%;
-  }
-}
-@media (max-width: 480px) {
-	input[type="range"] {
-    width: 60%;
-  }
+  width: 60%;
 }
 
 .index-container h2 {

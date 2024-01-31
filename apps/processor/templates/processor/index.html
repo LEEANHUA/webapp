@@ -2,8 +2,7 @@
 {% block content %}
 <div class="container">
     <p>
-        画像のイメージに合うように、加工が必要か選択してください。<br>
-        必要な場合は加工の強さと窓長を選択してください。
+        画像のイメージに合うように、音声を加工してください。
     </p>
     <form method="POST" class="form">
         <div class="question-number">
@@ -17,59 +16,61 @@
             <button type="button" onclick="resetParameter()" class="btn btn-reset">リセット</button>
             <input type="submit" name="button" value="この音声で決定" class="btn btn-decision">
         </div>
-        <div class="method">
-            {% if result['RP_toggle'] %}
-                <label class="toggle">
-                    <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()" checked>
-                </label>
-            {% else %}
-                <label class="toggle">
-                    <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()">
-                </label>
-            {% endif %}
-            音声を機械的に加工
-            <p>加工の強さ：<span id="currentThreshold"></span></p>
-            {% if result['RP_toggle'] %}
-                <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
-            {% elif result['RP_threshold'] %}
-                <!-- toggleが選択されていないときはdisabledに -->
-                <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1" disabled>
-            {% else %}
-                <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="1" step="1" disabled>
-            {% endif %}
-            <!-- rangeがdisabledのとき、valueを送信することができたいため、hiddenにvalueをコピーして送信する -->
-            <!-- 受信側で同様に処理できるようにnameは同じに -->
-            <input type="hidden" class="hidden" name="RP_threshold" value="">
-            <!-- <p>窓長：<span id="currentWindowLength"></span></p>
-            {% if result['RP_toggle'] %}
-                <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="{{ result['RP_win_length'] }}" step="512">
-            {% elif result['RP_win_length'] %}
-                <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="{{ result['RP_win_length'] }}" step="512" disabled>
-            {% else %}
-                <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="512" step="512" disabled>
-            {% endif %}
-            <input type="hidden" class="hidden" name="RP_win_length" value=""> -->
-        </div>
-        <div class="method">
-            {% if result['pitch_toggle'] %}
-                <label class="toggle">
-                    <input type="checkbox" id="pitchToggle" name="pitch_toggle" onchange="pitchOnchange()" checked>
-                </label>
-            {% else %}
-                <label class="toggle">
-                    <input type="checkbox" id="pitchToggle" name="pitch_toggle" onchange="pitchOnchange()">
-                </label>
-            {% endif %}
-            音声の高さを調整する
-            <p>変化: <span id="currentShift"></span></p>
-            {% if result['pitch_toggle'] %}
-                <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="{{ result['pitch_shift'] }}" step="1">
-            {% elif result['pitch_shift'] %}
-                <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="{{ result['pitch_shift'] }}" step="1" disabled>
-            {% else %}
-                <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="0" step="1" disabled>
-            {% endif %}
-            <input type="hidden" class="hidden" name="pitch_shift" value="">
+        <div class="methods">
+            <div class="method">
+                {% if result['RP_toggle'] %}
+                    <label class="toggle">
+                        <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()" checked>
+                    </label>
+                {% else %}
+                    <label class="toggle">
+                        <input type="checkbox" id="RobopitchToggle" name="RP_toggle" onchange="RobopitchOnchange()">
+                    </label>
+                {% endif %}
+                <b>音声を機械的に加工</b>
+                <p>加工の強さ：<span id="currentThreshold"></span></p>
+                {% if result['RP_toggle'] %}
+                    <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1">
+                {% elif result['RP_threshold'] %}
+                    <!-- toggleが選択されていないときはdisabledに -->
+                    <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="{{ result['RP_threshold'] }}" step="1" disabled>
+                {% else %}
+                    <input type="range" class="range" id="RobopitchThreshold" name="RP_threshold" min="1" max="100" value="1" step="1" disabled>
+                {% endif %}
+                <!-- rangeがdisabledのとき、valueを送信することができたいため、hiddenにvalueをコピーして送信する -->
+                <!-- 受信側で同様に処理できるようにnameは同じに -->
+                <input type="hidden" class="hidden" name="RP_threshold" value="">
+                <!-- <p>窓長：<span id="currentWindowLength"></span></p>
+                {% if result['RP_toggle'] %}
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="{{ result['RP_win_length'] }}" step="512">
+                {% elif result['RP_win_length'] %}
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="{{ result['RP_win_length'] }}" step="512" disabled>
+                {% else %}
+                    <input type="range" class="range" id="RobopitchWindowLength" name="RP_win_length" min="512" max="1024" value="512" step="512" disabled>
+                {% endif %}
+                <input type="hidden" class="hidden" name="RP_win_length" value=""> -->
+            </div>
+            <div class="method">
+                {% if result['pitch_toggle'] %}
+                    <label class="toggle">
+                        <input type="checkbox" id="pitchToggle" name="pitch_toggle" onchange="pitchOnchange()" checked>
+                    </label>
+                {% else %}
+                    <label class="toggle">
+                        <input type="checkbox" id="pitchToggle" name="pitch_toggle" onchange="pitchOnchange()">
+                    </label>
+                {% endif %}
+                <b>音声の高さを調整する</b>
+                <p>高さの変化: <span id="currentShift"></span></p>
+                {% if result['pitch_toggle'] %}
+                    <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="{{ result['pitch_shift'] }}" step="1">
+                {% elif result['pitch_shift'] %}
+                    <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="{{ result['pitch_shift'] }}" step="1" disabled>
+                {% else %}
+                    <input type="range" class="range" id="pitchShift" name="pitch_shift" min="-50" max="50" value="0" step="1" disabled>
+                {% endif %}
+                <input type="hidden" class="hidden" name="pitch_shift" value="">
+            </div>
         </div>
     </form>
 </div>
