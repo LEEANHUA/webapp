@@ -25,7 +25,6 @@ def index(number):
         filepath = Path(
             current_app.config["UPLOAD_FOLDER"], filename
         )
-        print(result)
         if result["button"] == "再生":
             input_audio, fs = sf.read(infile)
             if "pitch_toggle" in result:
