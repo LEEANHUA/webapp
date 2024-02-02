@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 app = Flask(__name__)
 
-app.config.from_object(config["testing"])
+app.config.from_object(config["local"])
 
 db.init_app(app)
 Migrate(app, db)

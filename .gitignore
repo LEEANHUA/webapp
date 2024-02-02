@@ -2,4 +2,4 @@ venv_webapp
 apps/uploads
 __pycache__
 migrations
-testing.sqlite
+*.sqlite
