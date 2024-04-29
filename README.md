@@ -14,7 +14,7 @@ https://www.gavo.t.u-tokyo.ac.jp/~miyamoto/webapp/index.cgi/average_face
 
 # Webサイトのイメージ
 
-![Webサイトのイメージ](apps/uploads/guide_image.png)
+<img width="952" alt="guide_image" src="https://github.com/LEEANHUA/webapp/assets/92500020/bcbca6b2-daff-4129-8d05-42e453219eea">
 
 1. 音声エージェントの画像([Stable Diffusion](https://ja.stability.ai/stable-diffusion)を用いて生成したもの)
 2. 加工した音声を試聴するボタン
